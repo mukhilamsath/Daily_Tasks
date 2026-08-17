@@ -24,9 +24,7 @@ class BankAccount:
         self.holder_name = holder_name
         self.balance = balance
 
-    # --------------------------------------
-    # Deposit
-    # --------------------------------------
+  
 
     def deposit(self, amount):
 
@@ -42,9 +40,7 @@ class BankAccount:
             f"{self.holder_name}'s account."
         )
 
-    # --------------------------------------
-    # Withdraw
-    # --------------------------------------
+ 
 
     def withdraw(self, amount):
 
@@ -65,9 +61,7 @@ class BankAccount:
             f"{self.holder_name}'s account."
         )
 
-    # --------------------------------------
-    # Display balance
-    # --------------------------------------
+  
 
     def display_balance(self):
 
@@ -77,9 +71,6 @@ class BankAccount:
         print("--------------------------------")
 
 
-# ==========================================
-# 3. SAVINGS ACCOUNT
-# ==========================================
 
 class SavingsAccount(BankAccount):
 
@@ -298,7 +289,7 @@ try:
         "r"
     ) as file:
 
-        reader = csv.DictReader(file)
+        reader = csv.DictReader(file)   
 
         for row in reader:
 
