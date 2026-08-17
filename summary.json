@@ -1,0 +1,10 @@
+{
+    "total_students": 4,
+    "average_grade": 87.5,
+    "grades": [
+        80,
+        90,
+        85,
+        95
+    ]
+}
