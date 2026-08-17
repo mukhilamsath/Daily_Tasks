@@ -1,22 +1,36 @@
+import os
 import boto3
+from dotenv import load_dotenv
 
+# Load variables from .env
+load_dotenv()
+
+# Get AWS region
+region = os.getenv("AWS_DEFAULT_REGION", "us-east-1")
+
+# Create Bedrock client
 client = boto3.client(
     "bedrock-runtime",
-    region_name="us-east-1"
+    region_name=region
 )
 
+# Send prompt to Bedrock
 response = client.converse(
-    modelId="YOUR_MODEL_ID",
+    modelId="amazon.nova-micro-v1:0",
     messages=[
         {
             "role": "user",
             "content": [
                 {
-                    "text": "Explain AWS Bedrock in simple words"
+                    "text": "Explain Amazon Bedrock in simple words."
                 }
             ]
         }
     ]
 )
 
-print(response["output"]["message"]["content"][0]["text"])
+# Extract AI response
+answer = response["output"]["message"]["content"][0]["text"]
+
+print("\nAI Response:")
+print(answer)

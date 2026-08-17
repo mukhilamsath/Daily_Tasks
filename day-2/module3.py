@@ -182,14 +182,14 @@ try:
         10000
     )
 
-    arun_account = CurrentAccount(
-        "Arun",
+    bala_account = CurrentAccount(
+        "Bala",
         5000,
         3000
     )
 
     mukhi_account.display_balance()
-    arun_account.display_balance()
+    bala_account.display_balance()
 
     # Deposit
     mukhi_account.deposit(2000)
@@ -201,12 +201,12 @@ try:
     mukhi_account.add_interest(5)
 
     # Current account withdrawal
-    arun_account.withdraw(7000)
+    bala_account.withdraw(7000)
 
     # Transfer
     transfer(
         mukhi_account,
-        arun_account,
+        bala_account,
         3000
     )
 
