@@ -3,5 +3,10 @@
         "task_id": 1,
         "title": "To compelete the networks assignment",
         "completed": false
+    },
+    {
+        "task_id": 2,
+        "title": "to do project report",
+        "completed": false
     }
 ]

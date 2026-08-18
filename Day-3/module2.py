@@ -2,14 +2,11 @@
 import time
 from functools import wraps
 def fibonacci(n):
-  
     a = 0
     b = 1
-
     for _ in range(n):
         yield a
         a, b = b, a + b
-
 def timer(function):
     @wraps(function)
     def wrapper(*args, **kwargs):
@@ -22,10 +19,7 @@ def timer(function):
 
         execution_time = end_time - start_time
 
-        print(
-            f"[timer :] {function.__name__} "
-            f"took {execution_time:.6f} seconds"
-        )
+        print(  f"[timer :] {function.__name__} "f"took {execution_time:.6f} seconds" )
         return result
     
     return wrapper
@@ -40,15 +34,10 @@ def logger(function):
         print(f"Function: {function.__name__}")
         print(f"Arguments: {args}")
         print(f"Keyword Arguments: {kwargs}")
-
         result = function(*args, **kwargs)
-
         return result
 
     return wrapper
-
-
-
 
 @timer
 @logger

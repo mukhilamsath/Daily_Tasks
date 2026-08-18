@@ -103,15 +103,15 @@ class TaskManager:
 
 
 def display_menu():
-    print("\n================================")
+    print("\n********************************************")
     print("        TO-DO LIST APP")
-    print("================================")
+    print("********************************************")
     print("1. Add Task")
     print("2. Remove Task")
     print("3. Mark Task as Done")
     print("4. View Tasks")
     print("5. Exit")
-    print("================================")
+    print("********************************************")
 
 
 def main():
@@ -127,28 +127,28 @@ def main():
 
         elif choice == "2":
             try:
-                task_id = int(input("Enter task ID to remove: "))
+                task_id = int(input("Enter task id to remove: "))
                 manager.remove_task(task_id)
             except ValueError:
-                print("Invalid input. Please enter a number.")
+                print("Invalid input.please enter a number.")
 
         elif choice == "3":
             try:
-                task_id = int(input("Enter task ID to mark done: "))
+                task_id = int(input("Enter task ID to mark done...: "))
                 manager.mark_done(task_id)
             except ValueError:
-                print("Invalid input. Please enter a number.")
+                print("Invalid input.please enter a number.")
 
         elif choice == "4":
             manager.view_tasks()
 
         elif choice == "5":
             manager.save_tasks()
-            print("Thank you for using the To-Do List App!")
+            print("thank you!!!")
             break
 
         else:
-            print("Invalid choice. Please select 1-5.")
+            print("Invalid choice.please select 1-5.")
 
 
 if __name__ == "__main__":
