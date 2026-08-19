@@ -7,7 +7,14 @@ def fibonacci(n):
     for _ in range(n):
         yield a
         a, b = b, a + b
-def timer(function):
+
+     
+
+
+for number in fibonacci(10):
+    print(number)
+
+'''def timer(function):
     @wraps(function)
     def wrapper(*args, **kwargs):
 
@@ -23,8 +30,6 @@ def timer(function):
         return result
     
     return wrapper
-
-
 
 def logger(function):
  
@@ -88,9 +93,12 @@ print('\n')
 
 numbers = [10, 25, 7, 42, 18]
 
-result = find_max(numbers)
+l = [1,2,3,4,5]
+
+result = find_max(l)
 
 print("Maximum:", result)
+
 
 print("average")
 print('\n')
@@ -112,6 +120,7 @@ text = "madam"
 result = is_palindrome(text)
 
 print("Is palindrome:", result)
+'''
 
 
 
