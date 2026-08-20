@@ -1,55 +1,58 @@
-from fastapi import FastAPI, Depends, HTTPException
-from sqlalchemy.orm import Session
+from fastapi import Depends, FastAPI, HTTPException
+from sqlalchemy import select
+from sqlalchemy.ext.asyncio import AsyncSession
 
-from database import engine, get_db
-from models import Base, Note
+from database import Base, engine, get_db
+from models import Note
 from schemas import NoteCreate, NoteUpdate, NoteResponse
-
-
-
-Base.metadata.create_all(bind=engine)
 
 
 app = FastAPI(
     title="Notes API",
-    description="Day 5 FastAPI CRUD API using SQLite and SQLAlchemy",
+    description="Async FastAPI CRUD API using SQLite and SQLAlchemy",
     version="1.0.0"
 )
 
 
+@app.on_event("startup")
+async def create_tables():
+    async with engine.begin() as connection:
+        await connection.run_sync(Base.metadata.create_all)
 
 
 @app.post("/notes/", response_model=NoteResponse, status_code=201)
-def create_note(note: NoteCreate, db: Session = Depends(get_db)):
+async def create_note(note_data: NoteCreate, db: AsyncSession = Depends(get_db)):
 
     new_note = Note(
-        title=note.title,
-        content=note.content
+        title=note_data.title,
+        content=note_data.content
     )
 
     db.add(new_note)
-    db.commit()
-    db.refresh(new_note)
+    await db.commit()
+    await db.refresh(new_note)
 
     return new_note
 
 
-
-
 @app.get("/notes/", response_model=list[NoteResponse])
-def get_notes(db: Session = Depends(get_db)):
+async def get_notes(db: AsyncSession = Depends(get_db)):
 
-    notes = db.query(Note).all()
+    result = await db.execute(select(Note))
+
+    notes = result.scalars().all()
 
     return notes
 
 
-
-
 @app.get("/notes/{note_id}", response_model=NoteResponse)
-def get_note(note_id: int, db: Session = Depends(get_db)):
+async def get_note(note_id: int, db: AsyncSession = Depends(get_db)):
 
-    note = db.query(Note).filter(Note.id == note_id).first()
+    result = await db.execute(
+        select(Note).where(Note.id == note_id)
+    )
+
+    note = result.scalar_one_or_none()
 
     if note is None:
         raise HTTPException(
@@ -60,16 +63,14 @@ def get_note(note_id: int, db: Session = Depends(get_db)):
     return note
 
 
-
-
 @app.put("/notes/{note_id}", response_model=NoteResponse)
-def update_note(
-    note_id: int,
-    note_data: NoteUpdate,
-    db: Session = Depends(get_db)
-):
+async def update_note(note_id: int, note_data: NoteUpdate, db: AsyncSession = Depends(get_db)):
 
-    note = db.query(Note).filter(Note.id == note_id).first()
+    result = await db.execute(
+        select(Note).where(Note.id == note_id)
+    )
+
+    note = result.scalar_one_or_none()
 
     if note is None:
         raise HTTPException(
@@ -79,20 +80,20 @@ def update_note(
 
     note.content = note_data.content
 
-    db.commit()
-    db.refresh(note)
+    await db.commit()
+    await db.refresh(note)
 
     return note
 
 
-
 @app.delete("/notes/{note_id}")
-def delete_note(
-    note_id: int,
-    db: Session = Depends(get_db)
-):
+async def delete_note(note_id: int, db: AsyncSession = Depends(get_db)):
 
-    note = db.query(Note).filter(Note.id == note_id).first()
+    result = await db.execute(
+        select(Note).where(Note.id == note_id)
+    )
+
+    note = result.scalar_one_or_none()
 
     if note is None:
         raise HTTPException(
@@ -100,8 +101,8 @@ def delete_note(
             detail="Note not found"
         )
 
-    db.delete(note)
-    db.commit()
+    await db.delete(note)
+    await db.commit()
 
     return {
         "message": "Note deleted successfully"
