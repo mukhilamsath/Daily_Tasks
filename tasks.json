@@ -1,12 +1,18 @@
-[
-    {
-        "task_id": 2,
-        "title": "to do project report",
-        "completed": false
-    },
-    {
-        "task_id": 3,
-        "title": "to do list operations",
-        "completed": false
-    }
-]
+{
+    "next_id": 4,
+    "deleted_ids": [
+        1
+    ],
+    "tasks": [
+        {
+            "task_id": 2,
+            "title": "to do task 2",
+            "completed": false
+        },
+        {
+            "task_id": 3,
+            "title": "to do task 4",
+            "completed": false
+        }
+    ]
+}
